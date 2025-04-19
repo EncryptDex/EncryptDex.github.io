@@ -250,44 +250,91 @@
       }
     }
   </style>
-</head>
-<body>
   <style>
-    .traffic-light {
+    #main-display {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(102, 126, 234, 0.15);
+      backdrop-filter: blur(12px);
+      background-image: url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1" fill="%236677ea" fill-opacity="0.1"/></svg>');
+      background-repeat: repeat;
+      background-position: center;
+      filter: none;
+      z-index: 10;
+    }
+    @keyframes gradientAnimation {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    #main-display::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 11;
+    }
+    #main-display-content {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
       display: flex;
-      gap: 8px;
-      padding: 0 1.5rem 1rem 1.5rem;
-      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      color: white;
+      user-select: none;
     }
-    .traffic-light span {
-      width: 14px;
-      height: 14px;
+    #welcome-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow:
+        0 0 3px rgba(255, 255, 255, 0.6),
+        0 0 6px rgba(255, 255, 255, 0.5),
+        0 0 9px rgba(255, 255, 255, 0.4),
+        0 0 12px rgba(255, 255, 255, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.2);
+    }
+    #main-display-content img {
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 6px rgba(0,0,0,0.4);
+      object-fit: cover;
+      border: 4px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
     }
-    .traffic-light .red {
-      background-color: #ff605c;
-      box-shadow: 0 0 8px #ff605c;
-    }
-    .traffic-light .yellow {
-      background-color: #ffbd44;
-      box-shadow: 0 0 8px #ffbd44;
-    }
-    .traffic-light .green {
-      background-color: #00ca56;
-      box-shadow: 0 0 8px #00ca56;
-    }
-    .header-icon svg {
-      display: block;
-      width: 48px;
-      height: 48px;
+    #enter-menu-btn {
+      padding: 0.75rem 2.25rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      border-radius: 12px;
       cursor: pointer;
-      filter: drop-shadow(0 0 2px rgba(102, 126, 234, 0.7));
-      transition: filter 0.3s ease;
+      box-shadow: 0 6px 15px rgba(102, 126, 234, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .header-icon svg:hover {
-      filter: drop-shadow(0 0 6px rgba(102, 126, 234, 1));
+    #enter-menu-btn:hover {
+      background: linear-gradient(135deg, #5a6edc, #6e3ea9);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.8);
+      transform: translateY(-2px);
+    }
+    #enter-menu-btn:active {
+      background: linear-gradient(135deg, #4a5dbb, #5a2e8a);
+      box-shadow: 0 4px 10px rgba(102, 126, 234, 0.5);
+      transform: translateY(0);
+    }
+    .container {
+      display: none;
     }
   </style>
   <header>
@@ -296,6 +343,13 @@
     </div>
     <h1>Encrypter & Decrypter</h1>
   </header>
+  <div id="main-display">
+  </div>
+  <div id="main-display-content">
+    <img src="profile.jpg" alt="Profile" />
+    <div id="welcome-text"></div>
+    <button id="enter-menu-btn" type="button">Enter Encryption Menu</button>
+  </div>
   <div class="container">
     <nav class="sidebar">
       <div class="traffic-light">
@@ -401,6 +455,46 @@
     <p class="footer-creator">Creator: Dexter</p>
     &copy; 2024 Encrypter & Decrypter. All rights reserved.
   </footer>
+  <script>
+    const welcomeText = document.getElementById('welcome-text');
+    const enterMenuBtn = document.getElementById('enter-menu-btn');
+
+    // Long welcome text with explanation
+    const fullWelcomeText = "Selamat datang di Encrypter & Decrypter! Website ini berfungsi untuk mengenkripsi teks dari bahasa manusia ke bahasa komputer dan mendekripsi kembali teks tersebut ke bahasa manusia. Dengan berbagai metode enkripsi yang tersedia, Anda dapat mengamankan pesan Anda dengan mudah dan cepat. Silakan gunakan menu enkripsi untuk mengubah teks Anda menjadi kode yang aman, dan menu dekripsi untuk mengembalikan kode tersebut ke bentuk aslinya. Nikmati pengalaman enkripsi yang sederhana dan efektif!";
+
+    // Function to animate text letter by letter
+    function animateText(element, text, delay = 50) {
+      let index = 0;
+      element.textContent = '';
+      const interval = setInterval(() => {
+        element.textContent += text.charAt(index);
+        index++;
+        if (index === text.length) {
+          clearInterval(interval);
+          // Optionally hide welcome text after animation completes
+          setTimeout(() => {
+            element.style.transition = 'opacity 1s ease';
+            element.style.opacity = '0';
+          }, 4000);
+        }
+      }, delay);
+    }
+
+    // Start animation
+    if (welcomeText) {
+      welcomeText.style.opacity = '1';
+      animateText(welcomeText, fullWelcomeText, 40);
+    }
+
+    enterMenuBtn.addEventListener('click', () => {
+      if (welcomeText) {
+        welcomeText.style.display = 'none';
+      }
+      document.getElementById('main-display').style.display = 'none';
+      document.getElementById('main-display-content').style.display = 'none';
+      document.querySelector('.container').style.display = 'flex';
+    });
+  </script>
 
   <!-- Help Modal -->
   <div id="help-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
