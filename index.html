@@ -402,12 +402,8 @@
         <div class="sidebar-group-label">OTHER</div>
         <button id="tab-rpg" type="button">RPG</button>
         <button id="btn-help" type="button">Help</button>
+<button id="btn-report" type="button" title="Report">Report</button>
       </div>
-    <div id="report-logo" title="Report a Suggestion" style="margin-top:auto; padding: 1.5rem; cursor: pointer; display: flex; justify-content: center; align-items: center;">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="#667eea" width="48" height="52" viewBox="0 0 24 24" style="filter: drop-shadow(0 0 2px rgba(102, 126, 234, 0.7)); transition: filter 0.3s ease;">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 3.87 3.13 7 7 7s7-3.13 7-7c0-3.87-3.13-7-7-7zm0 12c-2.76 0-5-2.24-5-5 0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.76-2.24 5-5 5zm-1-7h2v5h-2zm0 6h2v2h-2z"/>
-      </svg>
-    </div>
 
     <!-- Report Modal -->
     <div id="report-modal" style="display:none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000;">
@@ -704,7 +700,9 @@
     const reportText = document.getElementById('report-text');
     const reportFeedback = document.getElementById('report-feedback');
 
-    reportLogo.addEventListener('click', () => {
+    const btnReport = document.getElementById('btn-report');
+
+    btnReport.addEventListener('click', () => {
       reportModal.style.display = 'flex';
       reportText.value = '';
       reportFeedback.textContent = '';
