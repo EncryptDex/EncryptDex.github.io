@@ -251,6 +251,37 @@
     }
   </style>
   <style>
+    /* Traffic light styles */
+    .traffic-light {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      padding: 0.5rem 0;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      margin-left: 25px;
+    }
+    .traffic-light span {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: #444;
+      box-shadow: 0 0 4px rgba(0,0,0,0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .traffic-light span.red {
+      background-color: #e53e3e;
+      box-shadow: 0 0 8px #e53e3e;
+    }
+    .traffic-light span.yellow {
+      background-color: #d69e2e;
+      box-shadow: 0 0 8px #d69e2e;
+    }
+    .traffic-light span.green {
+      background-color: #38a169;
+      box-shadow: 0 0 8px #38a169;
+    }
     #main-display {
       position: fixed;
       top: 0;
