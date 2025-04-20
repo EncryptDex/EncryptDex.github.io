@@ -480,6 +480,7 @@
   <footer>
     <p class="footer-explanation">Website ini berfungsi untuk mengenkripsi teks dari bahasa manusia ke bahasa komputer dan mendekripsi kembali teks tersebut ke bahasa manusia.</p>
     <p class="footer-creator">Creator: Dexter</p>
+    <p id="visitor-count" style="font-weight: 600; color: #94a3b8; user-select: none; margin-top: 0.5rem;">Loading visitor count...</p>
     &copy; 2024 Encrypter & Decrypter. All rights reserved.
   </footer>
   <script>
@@ -521,6 +522,28 @@
       document.getElementById('main-display-content').style.display = 'none';
       document.querySelector('.container').style.display = 'flex';
     });
+
+    // Visitor count using countapi.xyz
+    const visitorCountElement = document.getElementById('visitor-count');
+    const namespace = 'dexter-encrypter';
+    const key = 'user-count';
+
+    function updateVisitorCount() {
+      fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.value !== undefined) {
+            visitorCountElement.textContent = `Pengunjung yang sudah memakai website ini: ${data.value}`;
+          } else {
+            visitorCountElement.textContent = 'Gagal memuat jumlah pengunjung.';
+          }
+        })
+        .catch(() => {
+          visitorCountElement.textContent = 'Gagal memuat jumlah pengunjung.';
+        });
+    }
+
+    updateVisitorCount();
   </script>
 
   <!-- Help Modal -->
